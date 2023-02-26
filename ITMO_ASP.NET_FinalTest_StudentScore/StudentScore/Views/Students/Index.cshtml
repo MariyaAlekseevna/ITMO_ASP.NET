@@ -1,0 +1,88 @@
+﻿@model IEnumerable<StudentScore.Models.Student>
+
+@{
+    ViewBag.Title = "Курс: Технология APS.NET";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Курс: Технология APS.NET</h2>
+
+<p>
+    @Html.ActionLink("Добавить студента", "Create")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Group)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScoreTask1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScoreTask2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinalScore)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoreTask1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoreTask2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinalScore)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.StudentId }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.StudentId }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.StudentId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @using (Ajax.BeginForm("FiveStudentsWithHighScore", new AjaxOptions { UpdateTargetId = "resultshigh" }))
+    {       
+        <input type="submit" value="Показать лучших студентов"/>
+    }
+    <div id="resultshigh"> </div>
+</div>
+
+<div>
+    @using (Ajax.BeginForm("FiveStudentsWithLowScore", new AjaxOptions { UpdateTargetId = "resultslow" }))
+    {
+        <input type="submit" value="Показать худших студентов"/>
+    }
+    <div id="resultslow"> </div>
+</div>
+<div>
+    @using (Ajax.BeginForm("StudentToFile", new AjaxOptions { UpdateTargetId = "resultsfile" }))
+    {
+        <input type="submit" value="Записать данные в файл" />
+    }
+    <div id="resultsfile"> </div>
+</div>
